@@ -21,4 +21,6 @@ from HPets import views
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.index),
+    path('home', views.get_sensors),
+    path('setting', views.set_all),
 ]

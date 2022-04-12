@@ -102,32 +102,33 @@ def set_curtain(request):
     rdata['state'] = 'ok'
     return JsonResponse(rdata)
 
-############################## 获取系列 ##############################
-
-def get_ports(request):
-    rdata = {'ports': sql.get_ports()}
-    rdata['state'] = 'ok'
+def set_all(request):
+    rdata = {
+            "food": 2.5,
+            "water": 10,
+            "fan": True,
+            "heat": False,
+            "air": True,
+            "uv": False,
+            }
     return JsonResponse(rdata)
 
-def get_data(request):
-    # print(f"get_data = {request.GET}")
-    r"""
-    GET request
-    """
-    rdata = dict()
-    rdata['pid'] = request.GET['houseNum'][0]
-    if 'startTime' in request.GET and 'endTime' in request.GET:
-        rdata['start_date'] = request.GET['startTime']
-        rdata['end_date'] = request.GET['endTime']
-    else:
-        rdata['start_date'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() - 24*3600))
-        rdata['end_date'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-    rdata['data_type'] = 'dht'
-    dht_data = sql.get_data(rdata)
-    # rdata['data_type'] = 'light'
-    # light_data = sql.get_data(rdata)
-    # return JsonResponse({'state': 'ok', 'dht_data': dht_data, 'light_data': light_data})
-    return JsonResponse({'state': 'ok', 'dht_data': dht_data})
+############################## 获取系列 ##############################
+
+def get_sensors(request):
+    rdata = {
+            "food": 5,
+            "water": 20,
+            "fan": True,
+            "heat": False,
+            "air": True,
+            "uv": False,
+            "temperature": 25,
+            "humidity": 70,
+            "petTemperature": 18,
+            }
+    # hardWares.run()
+    return JsonResponse(rdata)
 
 def get_light_config(request):
     r"""
