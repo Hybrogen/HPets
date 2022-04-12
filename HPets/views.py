@@ -103,6 +103,7 @@ def set_curtain(request):
     return JsonResponse(rdata)
 
 def set_all(request):
+    qdata = json.loads(request.body)
     rdata = {
             "food": 2.5,
             "water": 10,
@@ -111,6 +112,9 @@ def set_all(request):
             "air": True,
             "uv": False,
             }
+    for k in rdata.keys():
+        if k in qdata:
+            rdata[k] = qdata[k]
     return JsonResponse(rdata)
 
 ############################## 获取系列 ##############################
