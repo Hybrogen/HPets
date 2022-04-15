@@ -49,12 +49,15 @@ class CONFIG(object):
             except json.decoder.JSONDecodeError:
                 self.data = dict()
 
-    def save(self):
+    def save(self, reset=False):
         r"""
         此方法用于把内存中的配置文件保存到文件中离线
         """
-        if not self.oriFile: return
-        with open(self.oriFile, 'w', encoding='utf8') as f:
+        saveFile = self.oriFile
+        if reset: saveFile = self.setFile
+
+        if not saveFile: return
+        with open(saveFile, 'w', encoding='utf8') as f:
             f.write(json.dumps(self.data))
 
     def get_data(self, queryFields: list = []):
@@ -68,8 +71,11 @@ class CONFIG(object):
         - 返回一个字典 dict 内容为内存中的数据
         """
         rdata = self.data
-        for f in queryFields: rdata = rdata[f]
-        return rdata
+        try:
+            for f in queryFields: rdata = rdata[f]
+            return rdata
+        except:
+            return None
 
     def updata(self, field, data):
         r"""

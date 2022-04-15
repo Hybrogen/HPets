@@ -132,6 +132,38 @@ class CAM(object):
             base64_data = str(base64.b64encode(f.read()), 'utf-8')
         self.baiduCloud.addUser(base64_data, 'BASE64', 'models', userId)
 
+class SteeringEngine():
+    def __init__(self, pin):
+        self.pin = pin
+        GPIO.setup(self.pin, GPIO.OUT)
+        self.se = GPIO.PWM(self.pin, 50)
+
+        band = 10
+        iniv = 2.5
+        pwm = (0/180)*band + iniv
+        self.se.start(pwm)
+        time.sleep(0.1)
+        self.se.ChangeDutyCycle(0)
+        time.sleep(0.01)
+
+    def switch(self, statue=None):
+        if statue == None:
+            statue = 'open' if self.statue == 'close' else 'close'
+        if statue == True:
+            angles = list(range(0, 91))
+            self.statue = 'open'
+        else:
+            angles = list(range(0, 91))[::-1]
+            self.statue = 'close'
+        # for angle in angles:
+        #     pwm = (angle/180)*10 + 2.5
+        #     self.se.ChangeDutyCycle(pwm)
+        #     time.sleep(0.1)
+        self.se.ChangeDutyCycle((angles[-1]/180)*10 + 2.5)
+        time.sleep(0.1)
+        self.se.ChangeDutyCycle(0)
+        time.sleep(0.01)
+
 if __name__ == '__main__':
     '''
     a = HRELAY(4)

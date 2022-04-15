@@ -25,7 +25,7 @@ SECRET_KEY = '6+6eggzlg4dg%8-^_#(tom^k!lk8%8i$2rjkp!t%6@ed9vd-c#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hpets.zinchon.net']
+ALLOWED_HOSTS = ['hpet.zinchon.net']
 
 
 # Application definition
